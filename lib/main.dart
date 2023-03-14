@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:portfolio_v2/utils/constants/app_colors.dart';
 import 'package:portfolio_v2/views/global/super_scaffold.dart';
+import 'package:portfolio_v2/views/main_screen/main_screen_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +14,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Portfolio',
-      navigatorObservers: [routeObserver],
+    return GetMaterialApp(
+        title: 'My Portfolio',
+        debugShowCheckedModeBanner: false,
+        navigatorObservers: <NavigatorObserver>[routeObserver],
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+          fontFamily: 'Poppins',
+          fontFamilyFallback:const ['Book'],
+          textTheme: TextTheme(
+            titleLarge:const TextStyle(fontSize: 40,fontWeight: FontWeight.w500,color:Colors.white,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+            titleMedium:const TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color:Colors.white,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+            bodyMedium: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color:AppColors.textColor1,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+            bodySmall: TextStyle(fontSize: 10,fontWeight: FontWeight.normal,color:Colors.white.withOpacity(0.5),fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+       )
       ),
       home: const MainPage()
     );
@@ -28,7 +39,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const MainScreenPage();
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../utils/constants/app_constants.dart';
 
 final RouteObserver<PageRoute> routeObserver =  RouteObserver<PageRoute>();
 
@@ -79,7 +80,7 @@ class _SuperScaffoldState extends State<SuperScaffold> with RouteAware {
           floatingActionButton: widget.floatingActionButton,
           resizeToAvoidBottomInset:widget.resizeToAvoidBottomInset,
           body: MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+            data: MediaQuery.of(context).copyWith(textScaleFactor: AppConstants.textScaleFactor),
             child: Column(
               children: [
                 if(widget.isStatusBarSafe)
