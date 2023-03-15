@@ -8,10 +8,10 @@ class DesktopWorkController extends GetxController{
 
 
   List<Project> projectList = [
-    Project(name: 'L2E Myanmar', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
-    Project(name: 'L2E Myanmar', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
-    Project(name: 'L2E Myanmar', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
-    Project(name: 'L2E Myanmar', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
+    Project(name: 'Learn To Earn Myanmar', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!. Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!. Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
+    Project(name: 'Getbak', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
+    Project(name: 'Getbak Merchant', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
+    Project(name: 'Fary', description: 'Thist is the description of the app. This description is only for testing.I\'ll update it later. Looking forward!', images: [], playStore: '', appStore: ''),
   ];
 
   @override

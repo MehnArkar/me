@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
             titleLarge:const TextStyle(fontSize: 40,fontWeight: FontWeight.w500,color:Colors.white,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
             titleMedium:const TextStyle(fontSize: 30,fontWeight: FontWeight.w500,color:Colors.white,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
-            bodyMedium: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color:AppColors.textColor1,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
-            bodySmall: TextStyle(fontSize: 10,fontWeight: FontWeight.normal,color:Colors.white.withOpacity(0.5),fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+            bodyMedium: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color:AppColors.textColor1,fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
+            bodySmall: TextStyle(fontSize: 13,fontWeight: FontWeight.w500,color:Colors.white.withOpacity(0.5),fontFamily: 'Poppins', fontFamilyFallback: ['Book'],),
        )
       ),
       home: const MainPage()
