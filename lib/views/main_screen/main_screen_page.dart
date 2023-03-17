@@ -14,7 +14,7 @@ class MainScreenPage extends StatelessWidget {
     return SuperScaffold(
       body: ListView(
         children:const [
-           Responsive(desktop:DesktopHomePage()),
+           // Responsive(desktop:DesktopHomePage()),
            Responsive(desktop: DesktopWorkPage())
         ],
       )

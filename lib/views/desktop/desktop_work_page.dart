@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -163,7 +166,7 @@ class DesktopWorkPage extends StatelessWidget {
                   children: [
                     SvgPicture.asset('assets/icons/ios.svg',width: 15,color: isHoverAppStore.value?Colors.white:AppColors.colorAccent,),
                     const SizedBox(width: 15,),
-                    Text('Download',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverAppStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
+                    Text('App Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverAppStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -193,7 +196,7 @@ class DesktopWorkPage extends StatelessWidget {
                  children: [
                    SvgPicture.asset('assets/icons/android.svg',width: 15,color: isHoverPlayStore.value?Colors.white:AppColors.colorAccent,),
                    const SizedBox(width: 15,),
-                   Text('Download',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverPlayStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
+                   Text('Play Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverPlayStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
                  ],
                ),
              ),
@@ -204,7 +207,39 @@ class DesktopWorkPage extends StatelessWidget {
   }
 
   Widget projectPrototypePanel(){
-    return Container();
+    return
+      GetBuilder<DesktopWorkController>(
+        builder:(controller)=> Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(60),
+        child:
+        LayoutBuilder(
+          builder: (context , contraints )=>Stack(
+            children: [
+              Blob.random(
+                styles: BlobStyles(color: AppColors.colorPrimary),
+                edgesCount: 3,
+                  size: Get.width*0.5
+              ),
+                Transform(
+                  origin: Offset(0,contraints.maxHeight),
+                  transform:Matrix4.rotationZ(d2r(-10)),
+                    child: Transform(
+                        origin: Offset(0,contraints.maxHeight),
+                        transform: Matrix4.rotationY(d2r(-20)),
+                        child: Image.asset(controller.currentProject.images[0])))
+            ],
+          ),
+
+        )
+    ),
+      );
+  }
+  
+  
+  double d2r(double d){
+    double r =(d*pi)/180;
+    return r;
   }
 
 }
