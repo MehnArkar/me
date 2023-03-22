@@ -90,7 +90,7 @@ class DesktopWorkPage extends StatelessWidget {
                     child: Container(
                      padding:const EdgeInsets.all(12),
                       alignment: Alignment.center,
-                      color:AppColors.colorAccent,
+                      color:controller.currentIndex==0?AppColors.colorComponent: AppColors.colorAccent,
                       child:const Icon(Icons.arrow_back_ios_rounded,size:15,color: Colors.white,),
                     ),
                   ),
@@ -104,7 +104,7 @@ class DesktopWorkPage extends StatelessWidget {
                     child: Container(
                       padding:const EdgeInsets.all(12),
                       alignment: Alignment.center,
-                      color:AppColors.colorAccent,
+                      color:controller.currentIndex+1==controller.projectList.length?AppColors.colorComponent: AppColors.colorAccent,
                       child:const RotatedBox(quarterTurns: 2, child:  Icon(Icons.arrow_back_ios_rounded,size: 15,color: Colors.white,)),
                     ),
                   )
@@ -238,18 +238,23 @@ class DesktopWorkPage extends StatelessWidget {
             builder: (context , contraints )=>Stack(
               alignment: Alignment.center,
               children: [
-                SvgPicture.asset('assets/images/blob.svg',width: contraints.maxWidth,color: AppColors.colorComponent,),
+                SizedBox(
+                    width: contraints.maxWidth,
+                    height: contraints.maxHeight,
+                    child: SvgPicture.asset('assets/images/blob.svg',width: contraints.maxWidth,color: AppColors.colorComponent,fit: BoxFit.cover,)),
                 Transform(
                     origin: Offset(contraints.maxHeight/16*9,contraints.maxHeight),
                     transform:Matrix4.translationValues(controller.animationController.value*50, 0, 0)..rotateZ(d2r(controller.animationController.value* 10)),
-                    child: Image.asset(controller.currentProject.images[1],height: contraints.maxHeight,)),
+                    child: AspectRatio(
+                        aspectRatio: 9/16,
+                        child: Image.asset(controller.currentProject.images[1],height: contraints.maxHeight,fit: BoxFit.cover,))),
 
                 Transform(
                     origin: Offset(0,contraints.maxHeight),
                     transform:Matrix4.rotationZ(d2r(controller.animationController.value*(-10))),
                     child: AspectRatio(
                         aspectRatio: 9/16,
-                        child: Image.asset(controller.currentProject.images[0],height: contraints.maxHeight,))),
+                        child: Image.asset(controller.currentProject.images[0],height: contraints.maxHeight,fit: BoxFit.cover,))),
 
 
               ],
