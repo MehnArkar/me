@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -17,9 +15,9 @@ class DesktopWorkPage extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.08,vertical: MediaQuery.of(context).size.height*0.05),
-      decoration:const BoxDecoration(
-        color: AppColors.colorSecondary
-      ),
+      // decoration:const BoxDecoration(
+      //   color: AppColors.colorSecondary
+      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,65 +71,86 @@ class DesktopWorkPage extends StatelessWidget {
 
   Widget aboutProjectPanel(){
     return GetBuilder<DesktopWorkController>(
-      builder:(controller)=> Container(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Next panel
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                 padding:const EdgeInsets.all(12),
-                  alignment: Alignment.center,
-                  color:AppColors.colorComponent,
-                  child:const Icon(Icons.arrow_back_ios_rounded,size:15,color: Colors.white,),
-                ),
-                const SizedBox(width: 15,),
-                Text('0${controller.currentIndex+1} / 0${controller.projectList.length}',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color: Colors.white,fontWeight: FontWeight.w700),),
-                const SizedBox(width: 15,),
-                Container(
-                  padding:const EdgeInsets.all(12),
-                  alignment: Alignment.center,
-                  color:AppColors.colorComponent,
-                  child:const RotatedBox(quarterTurns: 2, child:  Icon(Icons.arrow_back_ios_rounded,size: 15,color: Colors.white,)),
-                )
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
-            Text(controller.currentProject.name,style: Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Colors.white),),
-            SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width:MediaQuery.of(Get.context!).size.width*0.025,
-                  height: 3,
-                  decoration: BoxDecoration(
-                      color: AppColors.colorAccent,
-                      borderRadius: BorderRadius.circular(3)
+      builder:(controller)=> AnimatedBuilder(
+        animation: controller.animationController,
+        builder:(context,child)=> Container(
+          alignment: Alignment.centerLeft,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Next panel
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      controller.onClickNextAndPerious(false);
+                    },
+                    child: Container(
+                     padding:const EdgeInsets.all(12),
+                      alignment: Alignment.center,
+                      color:AppColors.colorAccent,
+                      child:const Icon(Icons.arrow_back_ios_rounded,size:15,color: Colors.white,),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 15,),
-                Text('About this project',style: Theme.of(Get.context!).textTheme.bodyMedium,),
+                  const SizedBox(width: 15,),
+                  Text('0${controller.currentIndex+1} / 0${controller.projectList.length}',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color: Colors.white,fontWeight: FontWeight.w700),),
+                  const SizedBox(width: 15,),
+                  GestureDetector(
+                    onTap: (){
+                      controller.onClickNextAndPerious(true);
+                    },
+                    child: Container(
+                      padding:const EdgeInsets.all(12),
+                      alignment: Alignment.center,
+                      color:AppColors.colorAccent,
+                      child:const RotatedBox(quarterTurns: 2, child:  Icon(Icons.arrow_back_ios_rounded,size: 15,color: Colors.white,)),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
+              Transform.translate(
+                  offset: Offset(20-(20*controller.animationController.value), 0),
+                  child: Opacity(
+                      opacity: controller.animationController.value,
+                      child: Text(controller.currentProject.name,style: Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Colors.white),))),
+              SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width:MediaQuery.of(Get.context!).size.width*0.025,
+                    height: 3,
+                    decoration: BoxDecoration(
+                        color: AppColors.colorAccent,
+                        borderRadius: BorderRadius.circular(3)
+                    ),
+                  ),
+                  const SizedBox(width: 15,),
+                  Text('About this project',style: Theme.of(Get.context!).textTheme.bodyMedium,),
 
-                
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(Get.context!).size.height*0.025,),
-            SizedBox(
-              height: MediaQuery.of(Get.context!).size.height*0.15,
-              child: Text(controller.currentProject.description,style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(height: 1.8),),
-            ),
-            SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
-            downloadButtonPanel()
+
+                ],
+              ),
+              SizedBox(height: MediaQuery.of(Get.context!).size.height*0.025,),
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.height*0.15,
+                child: Transform.translate(
+                    offset: Offset(20-(20*controller.animationController.value), 0),
+                    child: Opacity(
+                        opacity: controller.animationController.value,
+                        child: Text(controller.currentProject.description,style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(height: 1.8),))),
+              ),
+              SizedBox(height: MediaQuery.of(Get.context!).size.height*0.05,),
+              downloadButtonPanel()
 
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -209,30 +228,36 @@ class DesktopWorkPage extends StatelessWidget {
   Widget projectPrototypePanel(){
     return
       GetBuilder<DesktopWorkController>(
-        builder:(controller)=> Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(60),
-        child:
-        LayoutBuilder(
-          builder: (context , contraints )=>Stack(
-            children: [
-              Blob.random(
-                styles: BlobStyles(color: AppColors.colorPrimary),
-                edgesCount: 3,
-                  size: Get.width*0.5
-              ),
+        builder:(controller)=> AnimatedBuilder(
+          animation: controller.animationController,
+          builder:(context,child)=> Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(60),
+          child:
+          LayoutBuilder(
+            builder: (context , contraints )=>Stack(
+              alignment: Alignment.center,
+              children: [
+                SvgPicture.asset('assets/images/blob.svg',width: contraints.maxWidth,color: AppColors.colorComponent,),
                 Transform(
-                  origin: Offset(0,contraints.maxHeight),
-                  transform:Matrix4.rotationZ(d2r(-10)),
-                    child: Transform(
-                        origin: Offset(0,contraints.maxHeight),
-                        transform: Matrix4.rotationY(d2r(-20)),
-                        child: Image.asset(controller.currentProject.images[0])))
-            ],
-          ),
+                    origin: Offset(contraints.maxHeight/16*9,contraints.maxHeight),
+                    transform:Matrix4.translationValues(controller.animationController.value*50, 0, 0)..rotateZ(d2r(controller.animationController.value* 10)),
+                    child: Image.asset(controller.currentProject.images[1],height: contraints.maxHeight,)),
 
-        )
+                Transform(
+                    origin: Offset(0,contraints.maxHeight),
+                    transform:Matrix4.rotationZ(d2r(controller.animationController.value*(-10))),
+                    child: AspectRatio(
+                        aspectRatio: 9/16,
+                        child: Image.asset(controller.currentProject.images[0],height: contraints.maxHeight,))),
+
+
+              ],
+            ),
+
+          )
     ),
+        ),
       );
   }
   

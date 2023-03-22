@@ -5,6 +5,7 @@ import 'package:portfolio_v2/utils/constants/app_colors.dart';
 import 'package:portfolio_v2/views/desktop/desktop_home_page.dart';
 import 'package:portfolio_v2/views/desktop/desktop_work_page.dart';
 import 'package:portfolio_v2/views/global/super_scaffold.dart';
+import 'package:portfolio_v2/views/global/ui/AnimateBackground.dart';
 
 class MainScreenPage extends StatelessWidget {
   const MainScreenPage({Key? key}) : super(key: key);
@@ -12,11 +13,16 @@ class MainScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SuperScaffold(
-      body: ListView(
-        children:const [
-           // Responsive(desktop:DesktopHomePage()),
-           Responsive(desktop: DesktopWorkPage())
-        ],
+      body: Stack(
+        children:[
+          const AnimateBackground(),
+          ListView(
+          children:const [
+             Responsive(desktop:DesktopHomePage()),
+             Responsive(desktop: DesktopWorkPage())
+          ],
+        ),
+    ]
       )
     );
   }

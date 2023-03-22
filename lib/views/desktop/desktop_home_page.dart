@@ -11,9 +11,9 @@ class DesktopHomePage extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height:MediaQuery.of(context).size.height,
-      decoration:const BoxDecoration(
-        color: AppColors.colorPrimary
-      ),
+      // decoration:const BoxDecoration(
+      //   color: AppColors.colorPrimary
+      // ),
       child: Column(
         children: [
           navBarPanel(context),
