@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:portfolio_v2/controllers/main_screen_controller.dart';
 import 'package:portfolio_v2/utils/constants/app_colors.dart';
 
 class DesktopHomePage extends StatelessWidget {
@@ -8,7 +9,7 @@ class DesktopHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height:MediaQuery.of(context).size.height,
       // decoration:const BoxDecoration(
@@ -85,11 +86,11 @@ class DesktopHomePage extends StatelessWidget {
                                 text: '\na ',
                                 style: Theme.of(context).textTheme.titleMedium!.copyWith(height: 1.5),
                                 children: [
-                              TextSpan(text: 'Mid-Level',style: Theme.of(context).textTheme.titleMedium!.copyWith(color: AppColors.colorAccent)),
-                              TextSpan(text: ' Mobile Developer',style: Theme.of(context).textTheme.titleMedium),
+                              // TextSpan(text: 'Mid-Level',style: Theme.of(context).textTheme.titleMedium!.copyWith(color: AppColors.colorAccent)),
+                              TextSpan(text: 'Mobile Developer',style: Theme.of(context).textTheme.titleMedium),
                             ]),
                             TextSpan(
-                                text: '\nwith a lot of experience! ',
+                                text: '\nwith a lot of experience & skills! ',
                                 style: Theme.of(context).textTheme.titleMedium,),
                           ]
                         ),
@@ -105,16 +106,22 @@ class DesktopHomePage extends StatelessWidget {
                           onExit: (_){
                             isHoverButton.value= false;
                           },
-                          child: Container(
-                            padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-                            decoration: BoxDecoration(
-                              color: isHoverButton.value?AppColors.colorAccent:Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: AppColors.colorAccent,width: 2
-                              )
+                          child: GestureDetector(
+                            onTap: (){
+                              MainScreenController mainController = Get.find();
+                              mainController.scrollController.animateTo(MediaQuery.of(context).size.height, duration: const Duration(milliseconds: 1000), curve: Curves.easeInOut);
+                            },
+                            child: Container(
+                              padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
+                              decoration: BoxDecoration(
+                                color: isHoverButton.value?AppColors.colorAccent:Colors.transparent,
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: AppColors.colorAccent,width: 2
+                                )
+                              ),
+                              child: Text('See my work',style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:isHoverButton.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
                             ),
-                            child: Text('See my work',style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:isHoverButton.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
                           ),
                         )
                     )

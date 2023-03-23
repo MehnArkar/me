@@ -21,7 +21,7 @@ class MainScreenPage extends StatelessWidget {
             ListView(
               controller: controller.scrollController,
             children:const [
-               // Responsive(desktop:DesktopHomePage()),
+               Responsive(desktop:DesktopHomePage()),
                Responsive(desktop: DesktopWorkPage())
             ],
           ),

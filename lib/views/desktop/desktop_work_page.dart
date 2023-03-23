@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:portfolio_v2/controllers/desktop/desktop_work_controller.dart';
 import 'package:portfolio_v2/utils/constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DesktopWorkPage extends StatelessWidget {
   const DesktopWorkPage({Key? key}) : super(key: key);
@@ -95,7 +96,7 @@ class DesktopWorkPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 15,),
-                  Text('0${controller.currentIndex+1} / 0${controller.projectList.length}',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color: Colors.white,fontWeight: FontWeight.w700),),
+                  Text('0${controller.currentIndex+1} / 0${controller.projectList.length}',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color: Colors.white,fontWeight: FontWeight.w700),overflow: TextOverflow.ellipsis,),
                   const SizedBox(width: 15,),
                   GestureDetector(
                     onTap: (){
@@ -159,69 +160,83 @@ class DesktopWorkPage extends StatelessWidget {
   downloadButtonPanel(){
     Rx<bool> isHoverAppStore = false.obs;
     Rx<bool> isHoverPlayStore = false.obs;
-   return Row(
-     mainAxisSize: MainAxisSize.min,
-     mainAxisAlignment: MainAxisAlignment.start,
-     children: [
-       Obx(
-                ()=> MouseRegion(
-              onHover: (_){
-                isHoverAppStore.value= true;
-              },
-              onExit: (_){
-                isHoverAppStore.value= false;
-              },
-              child: Container(
-                padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-                decoration: BoxDecoration(
-                    color: isHoverAppStore.value?AppColors.colorAccent:Colors.transparent,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                        color: AppColors.colorAccent,width: 2
-                    )
+   return GetBuilder<DesktopWorkController>(
+     builder:(controller)=> Row(
+       mainAxisSize: MainAxisSize.min,
+       mainAxisAlignment: MainAxisAlignment.start,
+       children: [
+         if(controller.currentProject.appStore.isNotEmpty)
+         Obx(
+                  ()=> MouseRegion(
+                onHover: (_){
+                  isHoverAppStore.value= true;
+                },
+                onExit: (_){
+                  isHoverAppStore.value= false;
+                },
+                child: GestureDetector(
+                  onTap: () async{
+                    await launchUrl(Uri.parse(controller.currentProject.appStore));
+                  },
+                  child: Container(
+                    padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
+                    decoration: BoxDecoration(
+                        color: isHoverAppStore.value?AppColors.colorAccent:Colors.transparent,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                            color: AppColors.colorAccent,width: 2
+                        )
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset('assets/icons/ios.svg',width: 15,color: isHoverAppStore.value?Colors.white:AppColors.colorAccent,),
+                        const SizedBox(width: 15,),
+                        Text('App Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverAppStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset('assets/icons/ios.svg',width: 15,color: isHoverAppStore.value?Colors.white:AppColors.colorAccent,),
-                    const SizedBox(width: 15,),
-                    Text('App Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverAppStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
-                  ],
-                ),
-              ),
-            )
-        ),
-       const SizedBox(width: 30,),
-       Obx(
-               ()=> MouseRegion(
-             onHover: (_){
-               isHoverPlayStore.value= true;
-             },
-             onExit: (_){
-               isHoverPlayStore.value= false;
-             },
-             child: Container(
-               padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-               decoration: BoxDecoration(
-                   color: isHoverPlayStore.value?AppColors.colorAccent:Colors.transparent,
-                   borderRadius: BorderRadius.circular(5),
-                   border: Border.all(
-                       color: AppColors.colorAccent,width: 2
-                   )
+              )
+          ),
+         if(controller.currentProject.appStore.isNotEmpty)
+         const SizedBox(width: 30,),
+         if(controller.currentProject.playStore.isNotEmpty)
+         Obx(()=> MouseRegion(
+               onHover: (_){
+                 isHoverPlayStore.value= true;
+               },
+               onExit: (_){
+                 isHoverPlayStore.value= false;
+               },
+               child: GestureDetector(
+                 onTap: () async{
+                   await launchUrl(Uri.parse(controller.currentProject.playStore));
+                 },
+                 child: Container(
+                   padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
+                   decoration: BoxDecoration(
+                       color: isHoverPlayStore.value?AppColors.colorAccent:Colors.transparent,
+                       borderRadius: BorderRadius.circular(5),
+                       border: Border.all(
+                           color: AppColors.colorAccent,width: 2
+                       )
+                   ),
+                   child: Row(
+                     mainAxisSize: MainAxisSize.min,
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     children: [
+                       SvgPicture.asset('assets/icons/android.svg',width: 15,color: isHoverPlayStore.value?Colors.white:AppColors.colorAccent,),
+                       const SizedBox(width: 15,),
+                       Text('Play Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverPlayStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
+                     ],
+                   ),
+                 ),
                ),
-               child: Row(
-                 mainAxisSize: MainAxisSize.min,
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 children: [
-                   SvgPicture.asset('assets/icons/android.svg',width: 15,color: isHoverPlayStore.value?Colors.white:AppColors.colorAccent,),
-                   const SizedBox(width: 15,),
-                   Text('Play Store',style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHoverPlayStore.value? Colors.white:AppColors.colorAccent,fontWeight: FontWeight.w500),),
-                 ],
-               ),
-             ),
-           )
-       ),
-     ],
+             )
+         ),
+       ],
+     ),
    );
   }
 
@@ -235,29 +250,29 @@ class DesktopWorkPage extends StatelessWidget {
           padding: const EdgeInsets.all(60),
           child:
           LayoutBuilder(
-            builder: (context , contraints )=>Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                    width: contraints.maxWidth,
-                    height: contraints.maxHeight,
-                    child: SvgPicture.asset('assets/images/blob.svg',width: contraints.maxWidth,color: AppColors.colorComponent,fit: BoxFit.cover,)),
-                Transform(
-                    origin: Offset(contraints.maxHeight/16*9,contraints.maxHeight),
-                    transform:Matrix4.translationValues(controller.animationController.value*50, 0, 0)..rotateZ(d2r(controller.animationController.value* 10)),
-                    child: AspectRatio(
-                        aspectRatio: 9/16,
-                        child: Image.asset(controller.currentProject.images[1],height: contraints.maxHeight,fit: BoxFit.cover,))),
+            builder: (context , contraints )=>SizedBox(
+              width: contraints.maxWidth,
+              height: contraints.maxHeight,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform(
+                      origin: Offset(contraints.maxHeight/16*9,contraints.maxHeight),
+                      transform:Matrix4.translationValues(controller.animationController.value*50, 0, 0)..rotateZ(d2r(controller.animationController.value* 10)),
+                      child: AspectRatio(
+                          aspectRatio: 9/16,
+                          child: Image.asset(controller.currentProject.images[1],height: contraints.maxHeight,fit: BoxFit.cover,))),
 
-                Transform(
-                    origin: Offset(0,contraints.maxHeight),
-                    transform:Matrix4.rotationZ(d2r(controller.animationController.value*(-10))),
-                    child: AspectRatio(
-                        aspectRatio: 9/16,
-                        child: Image.asset(controller.currentProject.images[0],height: contraints.maxHeight,fit: BoxFit.cover,))),
+                  Transform(
+                      origin: Offset(0,contraints.maxHeight),
+                      transform:Matrix4.rotationZ(d2r(controller.animationController.value*(-10))),
+                      child: AspectRatio(
+                          aspectRatio: 9/16,
+                          child: Image.asset(controller.currentProject.images[0],height: contraints.maxHeight,fit: BoxFit.cover,))),
 
 
-              ],
+                ],
+              ),
             ),
 
           )
