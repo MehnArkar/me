@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio_v2/utils/constants/app_colors.dart';
+import 'package:portfolio_v2/views/games/dino_jumb/dino_jumb_game.dart';
 import 'package:portfolio_v2/views/global/super_scaffold.dart';
 import 'package:portfolio_v2/views/main_screen/main_screen_page.dart';
 
@@ -39,7 +40,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MainScreenPage();
+    return const DinoJumbGame();
   }
 }
 

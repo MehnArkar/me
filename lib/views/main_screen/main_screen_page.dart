@@ -8,6 +8,7 @@ import 'package:portfolio_v2/views/global/super_scaffold.dart';
 import 'package:portfolio_v2/views/global/ui/AnimateBackground.dart';
 
 class MainScreenPage extends StatelessWidget {
+
   const MainScreenPage({Key? key}) : super(key: key);
 
   @override
