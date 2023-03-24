@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -10,15 +11,18 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
   final dinoKey = GlobalKey();
   final treeKey = GlobalKey();
   GameState currentGameState = GameState.stop;
-
-  double treeWidth = MediaQuery.of(Get.context!).size.width*0.15;
+  double treeWidth = MediaQuery.of(Get.context!).size.width*0.11;
   int score = 0;
+  late Timer timer;
+  Duration treeSpeed = const Duration(milliseconds: 2500);
+  Duration dinoSpeed = const Duration(milliseconds: 700);
+  int incressSpeedPerSecond = 200;
   
   @override
   void onInit() {
     super.onInit();
     //Dino animation controller
-    dinoController = AnimationController(vsync: this,duration: const Duration(milliseconds: 1000));
+    dinoController = AnimationController(vsync: this,duration: dinoSpeed);
     dinoController.addListener(() {
       if(dinoController.status == AnimationStatus.completed){
         dinoController.reverse();
@@ -26,26 +30,29 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
     });
 
     //Tree animation controller
-    treeController = AnimationController(vsync: this,duration: const Duration(milliseconds: 2500));
+    treeController = AnimationController(vsync: this,duration:  treeSpeed);
     treeAnimation = Tween<double>(begin: -treeWidth,end: MediaQuery.of(Get.context!).size.width+treeWidth).animate(treeController);
 
   }
 
   onGameStart(){
     currentGameState = GameState.start;
+    onIncressSpeed();
     onReset();
     onRunTree();
     update();
   }
 
-  onRestart(){
-   treeController.reset();
-   dinoController.reset();
-   currentGameState = GameState.start;
-   score=0;
-   update();
-   onRunTree();
+  onIncressSpeed(){
+    timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if(treeSpeed.inMilliseconds>=1800) {
+        treeSpeed = Duration(
+            milliseconds: treeSpeed.inMilliseconds - incressSpeedPerSecond);
+        treeController.duration = treeSpeed;
+      }
+    });
   }
+
 
   onReset(){
     score=0;
@@ -80,6 +87,8 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
     currentGameState=GameState.gameOver;
     dinoController.stop();
     treeController.stop();
+    timer.cancel();
+    treeSpeed =const Duration(milliseconds: 2500);
     update();
   }
 
@@ -99,7 +108,6 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
         position1.dx + size1.width > position2.dx &&
         position1.dy < position2.dy + size2.height &&
         position1.dy + size1.height > position2.dy);
-
     return collide;
   }
 

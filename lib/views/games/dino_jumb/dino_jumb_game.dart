@@ -51,7 +51,6 @@ class DinoJumbGame extends StatelessWidget {
               startGamePanel(),
             if(controller.currentGameState==GameState.gameOver)
               gameOverPanel(),
-
             //Tree
             AnimatedBuilder(
               animation: controller.treeAnimation,
@@ -80,7 +79,9 @@ class DinoJumbGame extends StatelessWidget {
       builder:(controller)=>
           Container(
             key: controller.dinoKey,
-            child: Image.asset('assets/images/dino.png',
+            child: Image.asset(
+              'assets/images/dino.png',
+        color: Colors.black.withOpacity(0.5),
         width: MediaQuery.of(context).size.height*0.15,
       fit: BoxFit.cover,
       ),
@@ -93,7 +94,8 @@ class DinoJumbGame extends StatelessWidget {
       builder:(controller) =>Container(
         key: controller.treeKey,
         child: Image.asset(
-          'assets/images/dino.png',
+          'assets/images/tree.png',
+          color: Colors.black.withOpacity(0.5),
           width:controller.treeWidth,
           fit: BoxFit.cover,
         ),
@@ -129,27 +131,26 @@ class DinoJumbGame extends StatelessWidget {
 
   Widget gameOverPanel(){
     return GetBuilder<DinoJumpController>(
-      builder:(controller)=> GestureDetector(
-        onTap: (){
-          controller.onRestart();
-          controller.onRestart();
-        },
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Game Over!',style:Theme.of(Get.context!).textTheme.titleLarge!.copyWith(color: Colors.grey),),
-              const SizedBox(height: 15,),
-              Container(
+      builder:(controller)=> Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Game Over!',style:Theme.of(Get.context!).textTheme.titleLarge!.copyWith(color: Colors.grey),),
+            const SizedBox(height: 15,),
+            GestureDetector(
+              onTap: (){
+                controller.onGameStart();
+              },
+              child: Container(
                   padding:const EdgeInsets.symmetric(horizontal: 25,vertical: 5),
                   decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(10)
                   ),
-                  child: Text('Play Again',style: Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Colors.white)))
+                  child: Text('Play Again',style: Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Colors.white))),
+            )
 
-            ],),
-        ),
+          ],),
       ),
     );
   }
