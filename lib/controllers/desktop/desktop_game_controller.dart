@@ -7,7 +7,6 @@ class DesktopGameController extends GetxController{
   List<Game> gameList =[
     Game(name: 'Dino Jumb', image: 'assets/images/dino_game.png', sourceCode: '', page: const DinoJumbGame()),
     Game(name: 'Shan Koe Mee', image: 'assets/images/skm_game.png', sourceCode: '', page: const ShanKoeMeeGame()),
-
   ];
 
 }

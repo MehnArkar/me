@@ -55,6 +55,7 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
 
 
   onReset(){
+    treeSpeed =const Duration(milliseconds: 2500);
     score=0;
     dinoController.reset();
     treeController.reset();
@@ -80,7 +81,6 @@ class DinoJumpController extends GetxController with GetTickerProviderStateMixin
           gameOver();
         }
       });
-
   }
 
   gameOver(){

@@ -26,22 +26,18 @@ class DesktopHomePage extends StatelessWidget {
   }
 
   Widget navBarPanel(BuildContext context){
+    List<String> navList = ['Home','Projects','Games'];
     return Container(
       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.1,vertical: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          eachNavItem('Home'),
-          eachNavItem('Project'),
-          eachNavItem('About'),
-          eachNavItem('Contact'),
-
-        ],
+        children: List.generate(navList.length, (index) => eachNavItem(index,navList[index],context)
       ),
+      )
     );
   }
 
-  eachNavItem(String title){
+  eachNavItem(int index,String title,BuildContext context){
     Rx<bool> isHover = false.obs;
     return MouseRegion(
       onHover: (_){
@@ -50,15 +46,19 @@ class DesktopHomePage extends StatelessWidget {
       onExit: (_){
         isHover.value= false;
       },
-      child: Obx(
-          ()=> Container(
-          padding:const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-          margin:const EdgeInsets.only(left: 30),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(color:isHover.value?AppColors.colorAccent:Colors.transparent,width: 2))),
-          child:Text(title,style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHover.value?AppColors.textColor1:AppColors.textColor2 ),) ,
+      child: Obx(()=> GestureDetector(
+              onTap:(){
+                MainScreenController controller = Get.find();
+                controller.scrollController.animateTo(MediaQuery.of(context).size.height*index, duration:const Duration(milliseconds: 1000), curve: Curves.easeInOut);
+              },
+              child: Container(
+              padding:const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+              margin:const EdgeInsets.only(left: 30),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color:isHover.value?AppColors.colorAccent:Colors.transparent,width: 2))),
+              child:Text(title,style: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(color:isHover.value?AppColors.textColor1:AppColors.textColor2 ),) ,
         ),
-      ),
-    );
+            )
+    ));
   }
 
   Widget greetingPanel(BuildContext context){
