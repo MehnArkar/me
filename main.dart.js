@@ -68051,7 +68051,7 @@ r=$.a6.D$.z.i(0,q).K(r).f
 q=$.bs().xr
 q=$.a6.D$.z.i(0,q)
 q.toString
-return A.dJ(A.n_(A.cW("Only Available in desktop view\n\n:'(",p,A.aF(q).p3.y.cT(B.h),B.eV,p),p,p),r.a.b,s.a.a)}}
+return A.dJ(A.n_(A.cW("Only Available In Desktop View\n\n:'(",p,A.aF(q).p3.y.cT(B.h),B.eV,p),p,p),r.a.b,s.a.a)}}
 A.a2e.prototype={
 $1(a){var s,r=null,q=this.a,p=q.M0(),o=t.p
 p=A.a([new A.r8(q.M0(),p,B.Ct,r),B.Jf,B.Jg],o)
