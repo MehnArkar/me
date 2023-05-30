@@ -22,15 +22,28 @@ class MainScreenPage extends StatelessWidget {
             const AnimateBackground(),
             ListView(
               controller: controller.scrollController,
-            children:const [
-               Responsive(desktop:DesktopHomePage()),
-               Responsive(desktop: DesktopWorkPage()),
-               Responsive(desktop: DesktopGamePage(),)
+            children: [
+               Responsive(
+                 desktop:const DesktopHomePage(),
+                 mobileLarge:notAvailableWidget(),
+                 mobile: notAvailableWidget(),
+               ),
+               const Responsive(desktop: DesktopWorkPage()),
+               const Responsive(desktop: DesktopGamePage(),)
             ],
           ),
     ]
         ),
       )
+    );
+  }
+  Widget notAvailableWidget(){
+    return SizedBox(
+      width: MediaQuery.of(Get.context!).size.width,
+      height: MediaQuery.of(Get.context!).size.height,
+      child: Center(
+        child: Text('Only Available in desktop view\n\n:\'(',style: Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: Colors.white),textAlign:TextAlign.center ,),
+      ),
     );
   }
 }
